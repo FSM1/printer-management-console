@@ -1,0 +1,15 @@
+{
+  "name": "printer-management-console",
+  "version": "1.0.0",
+  "description": "Printer Management Console",
+  "main": "index.js",
+  "author": "Michael Yankelev <myankelev@gmail.com>",
+  "private": true,
+  "license": "MIT",
+  "workspaces": {
+    "packages": [
+      "printerapi",
+      "printerwebapp"
+    ]
+  }
+}
