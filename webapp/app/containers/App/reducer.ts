@@ -2,6 +2,7 @@ import { getType } from 'typesafe-actions';
 
 import * as actions from './actions'
 import { ContainerState, ContainerActions} from './types';
+
 /*
  *
  * App reducer
@@ -10,6 +11,7 @@ import { ContainerState, ContainerActions} from './types';
 
 export const initialState: ContainerState = {
   printers: [],
+  selectedPrinter: undefined,
 };
 
 function appReducer(state = initialState, action: ContainerActions) {
@@ -18,6 +20,11 @@ function appReducer(state = initialState, action: ContainerActions) {
       return {
         ...state,
         printers: action.payload,
+      }
+    case getType(actions.selectPrinter):
+      return {
+        ...state,
+        selectPrinter: action.payload,
       }
     default:
       return state;

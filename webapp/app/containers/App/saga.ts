@@ -14,9 +14,9 @@ function* refreshPrinters() {
 
 function* addPrinter(action) {
   try {
-    yield call(ApiActions.createPrinter, action.payload);
-    // yield put(actions.addPrinter.success(result));
-    yield put(action.refreshPrinters)
+    const result = yield call(ApiActions.createPrinter, action.payload);
+    yield put(actions.addPrinter.success(result.data));
+    yield put(actions.refreshPrinters.request())
   } catch (error) {
     yield put(actions.addPrinter.failure(error));
   }
@@ -26,7 +26,7 @@ function* updatePrinter(action) {
   try {
     const result = yield call(ApiActions.updatePrinter, action.payload);
     yield put(actions.updatePrinter.success(result));
-    yield put(action.refreshPrinters)
+    yield put(actions.refreshPrinters.request())
   } catch (error) {
     yield put(actions.updatePrinter.failure(error));
   }
@@ -36,7 +36,7 @@ function* deletePrinter(action) {
   try {
     yield call(ApiActions.deletePrinter, action.payload);
     yield put(actions.deletePrinter.success());
-    yield put(action.refreshPrinters)
+    yield put(actions.refreshPrinters.request())
   } catch (error) {
     yield put(actions.deletePrinter.failure(error));
   }

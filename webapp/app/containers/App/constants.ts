@@ -18,7 +18,9 @@ export enum ActionTypes {
 
   DELETE_PRINTER_REQUEST = 'app/PrinterManagement/DELETE_PRINTER_REQUEST',
   DELETE_PRINTER_SUCCESS = 'app/PrinterManagement/DELETE_PRINTER_SUCCESS',
-  DELETE_PRINTER_FAILURE = 'app/PrinterManagement/DELETE_PRINTER_FAILURE'
+  DELETE_PRINTER_FAILURE = 'app/PrinterManagement/DELETE_PRINTER_FAILURE',
+
+  SELECT_PRINTER = 'app/PrinterManagement/DELETE_PRINTER_FAILURE',
 }
 
 export default ActionTypes;

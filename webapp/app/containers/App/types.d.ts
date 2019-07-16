@@ -11,6 +11,7 @@ export interface Printer {
 
 interface AppState { 
   printers: Array<Printer>,
+  selectedPrinter?: number 
 }
 
 /* --- ACTIONS --- */

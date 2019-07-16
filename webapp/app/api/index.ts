@@ -8,12 +8,12 @@ export function refreshPrinters(): Promise<any> {
 }
 
 export function createPrinter(printer: Printer): Promise<any> {
-  const body = JSON.stringify({ printer });
+  const body = JSON.stringify(printer);
   return apiRequest('POST', apiUrlBuilder.createPrinter, body, 'application/json');
 }
 
 export function updatePrinter(printer: Printer): Promise<any> {
-  const body = JSON.stringify({ printer });
+  const body = JSON.stringify(printer);
   return apiRequest('PUT', apiUrlBuilder.updatePrinter(printer.id), body, 'application/json');
 }
 export function deletePrinter(id: number): Promise<any> {

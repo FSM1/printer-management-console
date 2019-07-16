@@ -32,21 +32,22 @@ import { Printer } from './types';
 import appReducer from './reducer';
 import PrinterForm from 'components/PrinterForm';
 
-
 interface OwnProps { }
 
 interface StateProps {
   printers: Array<Printer>
+  selectedPrinter: number,
 }
 
 interface DispatchProps {
   addPrinter(data): void,
   updatePrinter(data): void,
   deletePrinter(id): void,
+  selectPrinter(id): void,
 }
 
 type Props = StateProps & DispatchProps & OwnProps;
-const App: React.SFC<Props> = (props: Props) => {
+const App: React.SFC<Props> = ({ printers, deletePrinter, addPrinter, selectedPrinter }: Props) => {
   const printerSchema = Yup.object().shape({
     name: Yup.string().required(),
     ipAddress: Yup.string().required(),
@@ -55,18 +56,25 @@ const App: React.SFC<Props> = (props: Props) => {
   return (
     <AppWrapper>
       <Grid container>
-        <Grid item sm={12} md={6}><PrinterList printers={props.printers} /></Grid>
+        <Grid item sm={12} md={6}><PrinterList printers={printers} onDelete={deletePrinter} /></Grid>
         <Grid item sm={12} md={6}>
           <Formik
-            initialValues={{
+            initialValues={() => selectedPrinter ? 
+              printers[selectedPrinter] : {
               name: '',
               ipAddress: '',
-              isActive: false,
+              isActive: false
             }}
             validationSchema={printerSchema}
             onSubmit={
-              (values) => {
-                props.addPrinter(values);
+              (values, actions) => {
+                addPrinter(values);
+                actions.resetForm({
+                  name: '',
+                  ipAddress: '',
+                  isActive: false
+                })
+                actions.setSubmitting(false);
               }
             }
             render={({ submitForm }) =>
@@ -85,9 +93,10 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   return {
-    addPrinter: (data) => dispatch(actions.addPrinter.request(data)),
-    updatePrinter: (data) => dispatch(actions.updatePrinter.request(data)),
-    deletePrinter: (id) => dispatch(actions.deletePrinter.request(id))
+    addPrinter: (data: Printer) => dispatch(actions.addPrinter.request(data)),
+    updatePrinter: (data: Printer) => dispatch(actions.updatePrinter.request(data)),
+    deletePrinter: (id: number) => dispatch(actions.deletePrinter.request(id)),
+    selectPrinter: (id: number) => dispatch(actions.selectPrinter(id)),
   };
 };
 const withConnect = connect(
@@ -97,7 +106,6 @@ const withConnect = connect(
 
 const withReducer = injectReducer<OwnProps>({ key: 'app', reducer: appReducer })
 const withSaga = injectSaga<OwnProps>({ key: 'app', saga: saga, mode: DAEMON });
-
 
 export default compose(
   withReducer,
