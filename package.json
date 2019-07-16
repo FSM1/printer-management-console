@@ -6,10 +6,21 @@
   "author": "Michael Yankelev <myankelev@gmail.com>",
   "private": true,
   "license": "MIT",
+  "scripts": {
+    "build": "yarn wsrun --stages -c build",
+    "build:webapp": "yarn wsrun -p webapp -c build",
+    "build:apiserver": "yarn wsrun -p api -c build",
+    "start:dev": "yarn wsrun start:dev --parallel --exclude-missing",
+    "clean": "rm -rf ./node_modules && rm -rf ./*/node_modules",
+    "test:webapp": "cd Webapp && yarn test:watch"
+  },
   "workspaces": {
     "packages": [
-      "printerapi",
-      "printerwebapp"
+      "api",
+      "webapp"
     ]
+  },
+  "dependencies": {
+    "wsrun": "^5.0.0"
   }
 }
