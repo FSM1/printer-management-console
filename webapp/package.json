@@ -88,7 +88,7 @@
     "jwt-decode": "^2.2.0",
     "loadable-components": "2.2.3",
     "lodash": "4.17.11",
-    "minimist": "1.2.0",
+    "minimist": "1.2.3",
     "node-loader": "^0.6.0",
     "normalizr": "^3.3.0",
     "prop-types": "15.7.2",
